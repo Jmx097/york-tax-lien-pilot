@@ -1,61 +1,50 @@
 # Client charter
 
-## Product objective
+## Product and scope
 
-Deliver a source-backed, deduplicated weekly CSV of qualified federal tax lien prospects to Christopher York using the already-paid Droplet and a proposed $10/month incremental operating budget. This is a proposed operating ceiling, excluding existing hosting, engineering labor, outreach and any unapproved document fees. It is not a claim that the workflow is currently running or can generate fifty qualified prospects.
+Produce a weekly reviewed CSV of unique taxpayer leads associated with recent recorded federal tax lien notices of at least USD 10,000 in Dallas, Collin, Denton and Bexar, Texas. A lead is researched public-record information, not taxpayer interest, consent, a consultation or a sales-qualified opportunity. Recorded amount is not current payoff balance.
 
-## Initial scope
-
-| Dimension | Planning default | Required client decision |
+| Dimension | Three-week baseline | Required decision |
 |---|---|---|
-| Geography | Dallas, Collin, Denton, Bexar, Texas | Approve all four; no California or NYC |
-| Instrument | New Notice of Federal Tax Lien, with original source evidence | Confirm business and individual coverage |
-| Lead unit | Unique prospect with at least one eligible notice; supporting notices retained | Confirm prospect-based versus filing-based contract |
-| Volume | Target 50 qualified new prospects/week on a four-week rolling average | Agree whether target is average or weekly minimum |
-| Freshness | Notice recorded within 30 days; late discoveries separately flagged | Approve maximum age and backlog handling |
-| Delivery | Monday 09:00 America/New_York; data cutoff Sunday 23:59:59 America/Chicago | Confirm timezone, holidays and late-arrival policy |
-| Format | UTF-8 CSV, fixed schema; client-facing summary and internal manifest | Approve headers and import behavior |
-| Distribution | One explicitly allowlisted recipient and approved sender API | Obtain actual email; do not infer it |
-| Spending | Direct access first, optional Bright Data, no paid copies by default | Approve products and spend controls |
-| Outreach | Client-managed; no automatic calls, texts, email campaigns or mailings | Client compliance owner approves use |
+| Geography | All four counties; no fixed county allocation | Accept coverage method or explicit written scope amendment |
+| Lead unit | Unique taxpayer/prospect, not filing | Identity, joint-party and overlap rules |
+| Amount | At least USD 10,000 recorded notice amount | Any additional restrictions require approval |
+| Target | 50 unique reviewable taxpayers/week, conditional | Shortfall reporting and selection/cap policy |
+| Recency/contact | Unset | Written age window and exact required fields |
+| Delivery | One weekly CSV in approved restricted folder | Weekday, cutoff, timezone, permissions and import acceptance |
+| Tracking | Restricted shared acceptance/activity/receipt log | Owners, statuses, evidence and reconciliation cadence |
+| Build | Three-week planning allowance, not guaranteed launch | Executed start, staffing and working calendar |
+| Spending | No new purchases authorized | Internal capacity, vendor/document and storage caps |
 
-## Non-goals
+The earlier Monday, 30-day recency, rolling-average and mailbox-API defaults are withdrawn. Neither an assumed USD 10/month ceiling nor a 2–4 hour optional integration estimate is a validated budget or estimate for the whole build.
 
-No multi-client SaaS, website, public dashboard, tax advice, legal lien-status guarantee, current-payoff calculation, automatic skip tracing, property-equity modeling, machine-learning conversion prediction, or unrelated geography in the MVP. A CSV delivery is not permission to contact a prospect.
+## Ownership
 
-## Stakeholders and accountability
+| Accountable role | Responsibility |
+|---|---|
+| Product owner / Jonathan | Capacity, prioritization, restricted decision register and escalation |
+| Firm approver / Christopher | Accepted business scope, contact expectations and launch acceptance |
+| Firm coordinator / Giovanni | Delivery review, campaign tag, weekly status and receipt updates |
+| Technical lead | State, qualification, contracts and recovery implementation |
+| Source engineer | Independent county access evidence and adapters |
+| Reviewer/operator | Row verification, suppressions, approved upload and runbook execution |
+| Operations owner | Host isolation, access control, alerts and restore drill |
+| Qualified professional/tax reviewers | Resolve regulated compensation and applicable tax treatment |
 
-| Role | Responsibility | Approval authority |
-|---|---|---|
-| Jonathan / product owner | Scope, technical budget, prioritization, escalation | Go/no-go and spend exceptions |
-| Christopher / client owner | Ideal client, accepted leads, format and recipient | Commercial acceptance and business-fit rules |
-| Giovanni / coordinator | Requirements and weekly feedback logistics | Coordination; not assumed to authorize system credentials |
-| Engineering lead | Architecture, implementation, pull-request quality | Technical release recommendation |
-| Source engineer | County mappings, access evidence, adapters | County validation evidence |
-| QA/data reviewer | Ground truth, exception queue, weekly sample | Data-quality gate |
-| Operations owner | Droplet isolation, schedules, backup and incidents | Deployment and operational readiness |
-| Client compliance owner | Source permissions and intended outreach | Compliance gate; obtain counsel as needed |
-
-Named engineers must be assigned during kickoff; do not assume GitHub handles or add outside collaborators automatically. One person may fill several roles but code/data review must have a second reviewer.
+Roles are planning assignments, not named engineering commitments or automatic GitHub assignees. Two focused technical contributors plus daily review capacity is an assumption. One engineer requires a smaller explicitly agreed scope; one county is not silently substituted for four.
 
 ## Acceptance gates
 
-**Gate A — Requirements:** signed lead definition, amount band, entity preference, mail-address requirement, sender/recipient, freshness, retention, spend limit, lawful-use review and expansion rules. A missing field blocks delivery, not silent defaulting.
+Use [G01–G12](10-decisions-and-launch-gates.md). Applicable gates must be approved before activation; all begin pending. Internal sanctioned discovery may proceed only within its own approved access/data boundaries. Live transfer, spending and billing have separate approvals.
 
-**Gate B — Access:** each included county has proven index pagination, exact document-type mapping, permitted detail/image access, fees, authentication requirements, sample extraction and rate-limit behavior from the actual Droplet. Unsupported counties stay disabled.
+Every pilot row requires human review, exact amount evidence, required approved contact fields, conservative identity linkage, status review, prior-delivery exclusion and suppression checks. Known unsupported rows remain held irrespective of aggregate parser accuracy. Observe actual sample size and per-county gaps; no fabricated accuracy or capacity guarantees.
 
-**Gate C — Quality:** proposed release targets are at least 98% correct included instrument classification and 98% exact amount extraction on a reviewer-labeled set of at least 50 real available notices, or all available if fewer, with per-county coverage. An included row's amount/address/status ambiguity is resolved by manual review; aggregate accuracy is not permission to export known errors.
+## Non-goals and shortfalls
 
-**Gate D — Reliability:** deterministic replay, crash recovery, suppression updates, budget-stop behavior, restore drill, approved test-recipient delivery and false-zero alarm verified. No public production port or PII in GitHub artifacts.
+No automated outreach, taxpayer representation, enrichment purchase, new sending infrastructure, API integration, CRM migration, dashboard, conversion guarantee or expanded geography. Optional later work needs a separate written scope and cost approval. The firm owns outreach, suitability and professional verification.
 
-**Gate E — Supply:** four complete historical recorded-date weeks and at least two scheduled live delivery cycles measured. The four-week average target is not achieved until qualified, first-delivered unique prospects average 50; backfill supply is not recurring supply. Historical results are indicative, not guaranteed.
+Deliver actual approved counts and explain source gaps, restrictions, processing failures or genuine supply. Never fill targets with duplicates, releases, stale backlog or uncertain amounts. Missing county access means escalation and an approved change or pause, not a claim of complete fulfillment.
 
-## Shortfall policy
+## Handoff
 
-Deliver the actual approved count and an explicit reason-coded shortfall. Do not substitute releases, duplicates, unverified amounts, stale records or unrelated counties. Determine whether the cause is source incompleteness, parser/reviewer throughput, client restrictions, or genuine supply. Fix technical loss first; request approval before widening freshness or adding another originally requested county. No automatic commitment to Cook or Harris without a comparative access/volume spike.
-
-## Client handoff requirements
-
-Obtain a client-owned or explicitly authorized sender credential, verified recipient, mailbox permission, sample import confirmation and an agreed contact method for failed deliveries. Use approved HTTPS email delivery or an approved existing restricted shared folder if email attachments are rejected. No new paid vendor is authorized by this plan.
-
-The lead record must identify public-record sourcing and avoid implying a current verified tax balance. The IRS distinguishes notice withdrawal, release, discharge and subordination; the pipeline must not collapse these into one debt-paid flag. [IRS lien guidance](https://www.irs.gov/businesses/small-businesses-self-employed/understanding-a-federal-tax-lien)
+A named operator and backup must demonstrate review, delivery, suppression, restart and restore using the restricted runbook. Client import and field acceptance must be documented. One successful demonstration does not establish recurring volume or conversion outcomes. No minimum setup recovery or financial return is assumed; private commercial terms remain outside this repository.

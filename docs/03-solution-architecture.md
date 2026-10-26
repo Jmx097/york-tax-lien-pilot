@@ -1,74 +1,52 @@
 # Solution architecture
 
-## Architecture decision
+## Decision
 
-Use one isolated batch application, one persistent SQLite database and systemd schedules on the existing Droplet. Prefer a TypeScript CLI over an always-on web API. No new public HTTP service, distributed queue, Redis, managed database, Kubernetes, CRM or runtime LLM is required for the pilot design.
+Use one isolated batch application, persistent SQLite state and a restricted evidence directory on an approved existing host. Proposed implementation: supported patched Node LTS, TypeScript CLI, permitted direct requests, Playwright only when needed, PDF text extraction and limited local OCR. Host capacity, dependency versions and source access remain to be verified.
 
-Choose Node 24 LTS and pin an approved patched release and dependency lockfile during implementation. Node publishes an [LTS release record](https://nodejs.org/en/blog/release/v24.22.0); the old project's [manifest](https://github.com/Jmx097/lien-automation-v2/blob/main/package.json) already uses TypeScript, Playwright and better-sqlite3. These are compatibility inputs, not reasons to copy its architecture wholesale.
+No always-on public server, distributed queue, managed database, CRM, mailbox API, Drive API, custom payment app or runtime LLM is required. Operator-assisted review and manual secure folder upload are part of the pilot, not hidden automation claims.
 
-## Logical modules
+## Components
 
-| Module | Responsibility | Durable output |
+| Component | Responsibility | Durable output |
 |---|---|---|
-| County adapter | Permitted query, all pages, detail/document retrieval | Recording identity, source evidence metadata |
-| Access transport | Direct HTTP, local browser, explicitly enabled vendor mode | Sanitized request metrics and costs |
-| Discovery runner | Date windows, overlap, checkpoints, partial-run detection | Search windows and upserted recordings |
-| Job runner | Single-worker leases, retry policy and durable state | Extraction and reconciliation jobs |
-| Extractor | Text layer first; local OCR if necessary | Field evidence, normalized liabilities and confidence |
-| Status resolver | Link releases/refiles/withdrawals with careful scope | Reviewable status events and suppressions |
-| Entity resolver | Conservative notice/prospect linkage | Canonical prospect and duplicate decisions |
-| Qualifier/ranker | Client business rules, freshness and explainable rank | Eligible/held/rejected status with reasons |
-| Exporter | Stable selection, safe CSV, manifest and checksum | Immutable batch and lead membership |
-| Delivery outbox | Approval, HTTPS send, retry and audit | Delivery state and provider message ID |
-| Feedback importer | Client outcomes keyed by lead_id | Status, revenue and suppression updates |
+| Policy/source registry | Approved fields, gates, allowed hosts and mappings | Versioned policy and per-county evidence |
+| Collector | Complete permitted windows, all pages, bounded retries | Recordings, coverage and queued jobs |
+| Extractor | Text first, narrow OCR, exact field evidence | Field candidates and hold reasons |
+| Review | Approve, correct, reject or hold | Reviewer, timestamp, reason and evidence |
+| Identity/status | Notice/prospect linkage and scoped events | Audited lineage and exclusions |
+| Qualification | Approved hard gates, suppression and novelty | Eligible reviewed prospect IDs |
+| Export | Deterministic CSV and aggregate manifest | Immutable batch and hash |
+| Delivery ledger | Approval, upload verification and acknowledgement | Separate operational states |
+| Shared log | Acceptance, activity and actual receipts | Restricted reconciliation evidence |
+| Operations | Locks, alerts, backup and recovery | Run history and restore evidence |
 
-Proposed interfaces: `discover(window, cursor) -> page`; `getDetail(recordingId)`; `getDocument(recordingId)`; `extract(evidence)`; `qualify(prospect, policyVersion)`; `buildBatch(cutoff, policyVersion)`; `send(batch, recipient)`. Source config includes its own departments/types; transport mode does not alter business rules.
+## State and replay
 
-## Processing sequence
+Recording uniqueness is county plus instrument number. Keep recording, notice, liability, taxpayer/prospect, review, status event, batch, delivery and receipt identities distinct. Never use taxpayer IDs as deduplication keys.
 
-1. Acquire a process-level flock shared by collection, export and maintenance. Start a run with a configuration hash and source version. If a prior lock is held, skip and alert when repeated; never start competing writers.
-2. Discover each enabled county serially. Search from the last successful window minus a proposed seven-day overlap. Respect source-certified-through date and record observed index lag. Use bounded historical reconciliation separately.
-3. Insert/update recording rows and enqueue needed jobs in one transaction. Checkpoints advance only after complete pagination/window persistence. A protective request/time cap marks the window incomplete rather than complete.
-4. Process durable jobs with one worker and expiring leases. Skip unchanged document hashes. Fetch only evidence required for missing fields/status. Persist accepted output and evidence metadata atomically; failures requeue with bounded backoff.
-5. Parse liability rows and address; run status/entity reconciliation and qualification. Quarantine uncertain amounts, identities, joint recipients or redacted fields for review. Human approval is recorded with reviewer and time.
-6. On Monday, select never-delivered qualified prospects through the cutoff, including newly discovered late-indexed notices that pass freshness. Recheck suppression and known status events. Create an immutable batch, member rows, CSV and internal manifest; write temp files then atomically rename.
-7. During pilot, an operator approves the batch and exact recipient. Delivery outbox sends through the selected existing HTTPS mailbox API, stores the provider ID and reconciles uncertain outcomes before retrying. A successful API call proves provider acceptance, not recipient reading.
-8. Import feedback and suppressions before the next export. Store lineage from each delivered lead to source recording, evidence, extraction version, policy and batch.
+Persist discovered results and follow-up jobs before advancing a window checkpoint. A blocked, clipped or schema-invalid response cannot mark a window complete. A single-writer application lock and durable leased work prevent overlapping jobs; reclaim expired work after a crash. Bound transient retries; stop on permission/payment/schema changes and alert rather than looping.
 
-## Scheduling and windows
+A rerun reuses identities and does not create duplicate records, deliveries or receipt entries. Schema migrations and rollback compatibility are explicitly tested before release. Do not put SQLite on an unverified shared network filesystem.
 
-Proposed collection schedule: daily at 06:30 America/Chicago. Monthly reconciliation: first successful run of each month rechecks the previous 30 recorded-date days, under its own bounded budget. Initial four-week historical benchmark is explicitly labeled non-recurring backfill.
+## Review and export
 
-Proposed delivery schedule: Monday 09:00 America/New_York, after a 07:30 Eastern validation/export attempt. Monday's collection in Central time is not required to race the export: the export uses the prior completed discovery state and Sunday cutoff. A stale collection watermark blocks normal approval or requires a clearly labeled partial delivery approved by the product owner. Store instants in UTC; preserve original county date and interpret date-only records in America/Chicago.
+Hold missing/conflicting amounts, ambiguous identities, material unmatched status events and unapproved contact fields. Every included pilot row has a reviewer and restricted evidence. Simple date/ID ordering replaces elaborate scoring.
 
-Use persistent calendar timers and validate exact expressions on the deployed host. systemd's [timer documentation](https://www.freedesktop.org/software/systemd/man/systemd.timer.html) describes catch-up after downtime; catch-up activates a service, not a replay of every missed business export. The application enumerates uncompleted windows/batches explicitly and never sends multiple stale weeks without approval.
+Apply suppressions and prior-delivery checks at selection and immediately before transfer. An intervening suppression requires a revised immutable batch and approval. Export fixed headers, exact amounts, stable lead IDs and public record links without session tokens.
 
-## Access strategy
+## Delivery states
 
-Start with permitted direct HTTP where a stable request is verified. Use local Playwright if interaction is required. Add residential proxy routing or Bright Data Browser API only after measurements show a reliability or labor advantage, source/vendor permissions are reviewed and the product owner approves the cost. Neither vendor mode repairs a wrong selector or creates more filings.
+Use draft → validated → approved → upload_pending → uploaded_verified → acknowledged; rejected, cancelled and upload_unknown are explicit alternatives. Approval is not upload, upload is not client acceptance and acceptance is not fee entitlement.
 
-A hosted browser may be cheaper overall than hours of anti-bot maintenance; compare engineer time as well as bandwidth. Bright Data distinguishes a [managed browser from plain proxies](https://docs.brightdata.com/products/scraping-browser/faqs). Do not categorically ban browser fallback or assume a residential IP solves access.
+Record approved folder identity and authorized members, local hash, remote object/version, verified content/hash where supported, operator and timestamps. On timeout, inspect the destination before retrying. Do not promise exactly-once remote delivery. Corrected batches have revision IDs; do not overwrite the audit trail.
 
-Limit one browser/one county at a time. Cache unchanged assets/documents, suppress analytics/fonts/video, but allow document page images required for OCR. Reuse only valid authorized sessions, never put cookies in source control, and do not route login-only content through a product that prohibits it.
+## Schedule and isolation
 
-## State and resilience
+Delivery weekday, cutoff, timezone, holiday policy and source overlap interval remain unset pending approval. Store run timestamps in UTC while preserving source date semantics. The application enumerates missed windows; timer catch-up alone is insufficient.
 
-SQLite uses WAL, foreign keys, busy timeout, migrations and a single application writer. Keep the database on local disk, not a network share. A durable jobs table replaces a queue service; one job state transition and its results commit together. Renew long-job leases and cap attempts. Separate transient network failures from schema drift, permission denial, paid-content gates and validation errors.
+Proposed paths: `/opt/york-tax-lien-pilot/` for releases, `/etc/york-tax-lien-pilot/` for restricted configuration and `/var/lib/york-tax-lien-pilot/` for persistent state. Dedicated non-root identity, least privilege, independent state and credentials. No modification to the earlier deployment or automatic enablement of timers.
 
-Use three attempts maximum per transient operation (initial plus two retries), exponential backoff with jitter and Retry-After handling. Stop a county on unresolved authorization/challenge restrictions, unknown schemas or mapping drift; do not cycle providers indefinitely. County failures do not erase other completed counties, but mark the overall export coverage incomplete.
+## Deferred work
 
-Protect against false zero: a successful HTTP 200 is insufficient. Validate response shape, department/type mappings, pagination and source availability before accepting an empty result. Alert on zero new hits for multiple runs, unusual rejection rate or lag beyond the agreed threshold; compare to historical source behavior, not a fabricated minimum.
-
-## Deployment boundary
-
-Run under a dedicated non-root service user with its own `/opt/york-tax-lien-pilot` code, `/etc/york-tax-lien-pilot` secrets and `/var/lib/york-tax-lien-pilot` state. Keep it separate from OpenClaw/other jobs, their volumes, credentials and timers. Prefer native systemd isolation for MVP; a Docker image may be added if it matches team operations, but never place SQLite inside an ephemeral container layer.
-
-Initial resource guardrail: one worker/browser, 1 GiB memory budget subject to measured capacity, CPUQuota 50%, 45-minute collection timeout. These are proposed starting limits, not verified Droplet capacity. Inventory RAM, disk and existing load first; disable OCR/browser concurrency if the host cannot sustain it. A remote browser can reduce local RAM pressure without increasing Droplet size.
-
-## Delivery boundary
-
-Choose exactly one approved existing sender API at kickoff: Microsoft Graph for an existing Microsoft 365 mailbox or Gmail API for an existing Google mailbox. Implement only the selected provider. Keep credentials server-side, scoped as narrowly as supported; use delegated permission where suitable, or mailbox-scoped application access with tenant admin approval. No email address has been inferred, and no messages are sent during setup.
-
-Use HTTPS on port 443 rather than assuming SMTP works: DigitalOcean [blocks SMTP ports by default](https://docs.digitalocean.com/support/why-is-smtp-blocked/). Send the approved minimal CSV attachment to the allowlisted recipient, with counts, coverage, source lag and shortfall disclaimer. If the client rejects attachments, switch by explicit scope decision to its existing restricted folder and a notification link; do not build both routes initially.
-
-Use a deterministic batch ID, unique batch-recipient outbox row, content hash and provider ID. On timeout after possible acceptance, set delivery state `unknown`, look up provider evidence and require human reconciliation before resending. Do not claim exactly-once delivery over email.
+General OCR, extra automated counties after freeze, APIs, CRM, campaign infrastructure, paid enrichment, custom portal, conversion scoring and geographic expansion. Four-county scope remains a business requirement; deferred automation requires accepted manual coverage or an explicit scope change, not omission.

@@ -1,0 +1,29 @@
+{
+  "schema_version": "pilot-policy-draft-v1",
+  "collection_enabled": false,
+  "personal_data_transfer_enabled": false,
+  "paid_access_enabled": false,
+  "billing_enabled": false,
+  "minimum_notice_amount_cents": 1000000,
+  "currency": "USD",
+  "weekly_target_unique_taxpayers": 50,
+  "weekly_target_is_guarantee": false,
+  "recency_days": null,
+  "required_contact_fields": null,
+  "entity_rules": null,
+  "delivery_weekday": null,
+  "delivery_cutoff": null,
+  "delivery_timezone": null,
+  "recipient_folder_id": null,
+  "authorized_member_ids": [],
+  "source_request_limit": null,
+  "source_byte_limit": null,
+  "monthly_spend_cap_cents": null,
+  "approved_policy_reference": null,
+  "counties": {
+    "dallas": {"enabled": false, "access_decision": "pending"},
+    "collin": {"enabled": false, "access_decision": "pending"},
+    "denton": {"enabled": false, "access_decision": "pending"},
+    "bexar": {"enabled": false, "access_decision": "pending"}
+  }
+}

@@ -1,0 +1,14 @@
+lead_id
+batch_id
+delivered_at_utc
+source_county
+campaign_tag
+acceptance_status
+accepted_at_utc
+attribution_policy_version
+overlap_reason
+activity_status
+activity_updated_at_utc
+do_not_contact
+rejection_reason
+restricted_evidence_reference

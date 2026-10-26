@@ -1,55 +1,69 @@
 # York Tax Lien Pilot
 
-**Fresh-client delivery project | Private | Planning baseline: 2026-10-26**
+**Fresh-client project | Three-week operator-assisted pilot | Updated 2026-10-26**
 
-Build a low-incremental-cost workflow that collects federal tax lien notices from Dallas, Collin, Denton and Bexar counties and produces a reviewed weekly CSV for Christopher York. Run a single isolated batch application on the already-paid Droplet. Use Bright Data only where access tests justify it and permission allows it.
+Build a reviewed weekly CSV of unique taxpayer prospects associated with recent federal tax lien notices of at least USD 10,000 across Dallas, Collin, Denton and Bexar counties, Texas. Deliver through an agreed access-restricted shared folder and reconcile acceptance and actual collections in a lightweight restricted log.
 
 ## Current status
 
-This repository contains the solution design, contracts, deployment templates and implementation backlog. **The county adapters, extraction pipeline and delivery integration are not implemented or live.** Templates do not activate timers, create accounts, spend money, or send data. All county integrations start disabled. Nothing in `Jmx097/lien-automation-v2` has been modified.
+**Planning assets only. The county adapters, extraction pipeline, scheduler, upload workflow and financial reconciliation are not implemented or live.** Example configuration is disabled; documents and issue templates do not enforce runtime controls. No source permission, host capacity, weekly volume, client acceptance or professional/tax clearance is represented as verified.
 
-The prior repository is a reference, not a dependency or deployment target. Its [package manifest](https://github.com/Jmx097/lien-automation-v2/blob/main/package.json) identifies a Node/TypeScript project with Playwright and SQLite dependencies; its [scraper folder](https://github.com/Jmx097/lien-automation-v2/tree/main/src/scraper) has no Texas county adapter in the inspected listing. Existing production readiness is not assumed.
+This is a public repository: keep the private agreement, credentials, taxpayer records, source documents, client financial logs and professional advice out of GitHub. The previous project is not a deployment target; do not copy its secrets, cookies, databases or client records. Nothing in the previous repository is modified by this update.
 
-## Non-negotiable distinctions
+## Three-week success
 
-- Fifty raw filings are not fifty unique, qualified prospects. Target the latter unless the client explicitly signs a filings-based definition.
-- A shared portal family is an opportunity for reusable code, not proof of identical requests, free images or automation permission.
-- No verified county counts or conversion data are available at this baseline. Earlier population-based estimates are not a launch forecast.
-- Recorded notice amount is not current IRS payoff balance, service fee, or probability of conversion.
-- Never guarantee fifty per week before a measured, deduplicated pilot. Never pad with releases, duplicates or stale backfill.
+- Working, operator-assisted collection, evidence review, deduplication, suppression and CSV delivery.
+- At least one complete county path by the end of week one; all four remain the agreement scope. One adapter alone does not satisfy that scope.
+- Manual assistance only where permitted and explicitly accepted with sustainable capacity. An unavailable county requires a written scope change or pause.
+- First approved real delivery targeted around working day 8; repeat about one week later when the agreed calendar permits. Handoff by day 15 is conditional on the gates, not a guaranteed launch date.
+- Fifty unique reviewable taxpayers is a conditional weekly target, not guaranteed supply or a four-week rolling average. Report shortfalls; never pad them.
+
+The private draft's planning allowance begins after execution. Start date, working calendar and approval status remain unconfirmed; no calendar deadline is silently inferred from this publication.
 
 ## Team reading order
 
-1. [Client charter](docs/01-client-charter.md): product scope and acceptance gates.
-2. [Source validation](docs/02-source-validation.md): evidence and the first investigation.
-3. [Solution architecture](docs/03-solution-architecture.md): modules, execution, delivery and failure handling.
-4. [Data contract](docs/04-data-contract.md): prospect identity, amounts and CSV rules.
-5. [ROI and cost](docs/05-roi-and-cost.md): ranking, cost controls and measurement.
-6. [Delivery plan](docs/06-delivery-plan.md): owners, estimates, dependencies and schedule.
-7. [Operations](docs/07-operations.md): deployment, incidents and rollback.
-8. [Quality and security](docs/08-quality-security.md): tests and production controls.
-9. [Team walkthrough](docs/09-team-walkthrough.md): meeting agenda and decision checklist.
+1. [Client charter](docs/01-client-charter.md)
+2. [Source validation](docs/02-source-validation.md)
+3. [Architecture](docs/03-solution-architecture.md)
+4. [Data contract](docs/04-data-contract.md)
+5. [Cost and collections](docs/05-roi-and-cost.md)
+6. [15-day delivery plan](docs/06-delivery-plan.md)
+7. [Operations](docs/07-operations.md)
+8. [Quality and security](docs/08-quality-security.md)
+9. [Team walkthrough](docs/09-team-walkthrough.md)
+10. [Pending decisions and launch gates](docs/10-decisions-and-launch-gates.md)
+11. [Agreement reconciliation](docs/11-agreement-reconciliation.md)
+12. [Execution backlog](planning/backlog.md)
 
 ## Intended workflow
 
 ```mermaid
 flowchart LR
-  T[systemd: daily collection] --> A[Per-county access adapter]
-  A --> Q[(SQLite: index + durable jobs)]
-  Q --> E[Text extraction / local OCR / review]
-  E --> S[Status + dedupe + qualification]
-  S --> X[Monday: deterministic CSV + manifest]
-  X --> R[Operator approval during pilot]
-  R --> O[(Delivery outbox)]
-  O --> C[Approved HTTPS mailbox API to Christopher]
-  C --> F[Client feedback by lead_id]
-  F --> S
+  A[Approved permitted sources] --> B[Isolated batch collection]
+  B --> C[(SQLite and restricted evidence)]
+  C --> D[Extraction and human review]
+  D --> E[Status, identity and suppression]
+  E --> F[Immutable CSV and manifest]
+  F --> G[Operator approval]
+  G --> H[Restricted folder upload]
+  H --> I[Separate client acceptance]
+  I --> J[Restricted feedback and collections log]
+  J --> E
 ```
 
-**Proposed stack:** Node 24 LTS, TypeScript, SQLite, Playwright only when needed, Poppler/Tesseract for local extraction, systemd, one persistent local state directory and an existing approved HTTPS email API. No new database service, Redis, Kubernetes, CRM, dashboard, paid enrichment or runtime LLM.
+Proposed stack: supported patched Node LTS, TypeScript CLI, SQLite, permitted direct requests and Playwright only if needed, PDF text extraction and narrow local OCR, systemd, persistent isolated storage. An existing approved shared folder and manual upload are sufficient; no mailbox API, Drive API, CRM migration, public dashboard, paid enrichment, automated outreach or runtime LLM is required.
 
 ## Start here
 
-The first three build issues establish the client contract, validate access/images on all four counties, and measure four complete historical weeks. The product owner must resolve the recipient, sender API, acceptable debt band, definition of a lead, budget and lawful outreach policy before live delivery. Unknowns are intentional launch gates, not decisions silently made on the client's behalf.
+Assign two focused technical contributors, a daily reviewer/operator and a product owner available for same-day decisions, or explicitly reduce scope. Begin client acceptance decisions, all-four-county access investigation and the technical foundation in parallel. Freeze new features on day 12; preserve evidence, review, suppression, recipient control and recovery regardless of deadline pressure.
 
-See [all build issues](https://github.com/Jmx097/york-tax-lien-pilot/issues). Reuse old code selectively only after tests and secret/PII review; never copy production `.env`, databases, sheets, cookies or client records into this repository.
+Read the [backlog](planning/backlog.md) and [GitHub issues](https://github.com/Jmx097/york-tax-lien-pilot/issues). Approving repository updates does not approve the agreement, source access, data sharing, spending, billing or live operation.
+
+## Validate planning assets
+
+```bash
+python3 scripts/validate-planning.py
+git diff --check
+```
+
+These checks verify internal links, disabled policy, draft counts and header lists. They do not test live sources, application behavior, security configuration, client approval or professional legality.
