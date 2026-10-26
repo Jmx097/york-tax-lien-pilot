@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-26 — Three-week work packages
+
+- Added local P01–P12 issue drafts, dependency backlog, and a dry-run-first issue helper.
+- Did not assign people, create a board, activate sources, transfer data, spend money, or authorize billing.
+- Publishing these files does not pass any launch gate.
+
 ## 2026-10-26 — Three-week alignment
 
 - Reframed delivery as a gated 15-working-day operator-assisted pilot; freeze features on day 12.
