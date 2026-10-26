@@ -1,0 +1,16 @@
+receipt_id
+lead_id
+original_receipt_id
+entry_type
+collected_at_utc
+currency
+eligible_service_category
+eligible_amount_cents
+adjustment_reason
+terms_version
+attribution_status
+service_fee_cents
+setup_recovery_cents
+setup_remaining_cents
+invoice_reference
+restricted_evidence_reference
