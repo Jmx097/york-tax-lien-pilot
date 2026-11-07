@@ -2,39 +2,36 @@
 
 ## Purpose
 
-Align on a three-week usable client outcome and its stop conditions, not a promise of four perfect scrapers or fifty guaranteed leads. Read the charter, day plan, backlog and pending gates before kickoff. Assign real owners and capacity without guessing GitHub identities.
+Align on a validation-first outcome and its stop conditions, not a promise of working scrapers or fifty guaranteed taxpayers. Read the charter, source gaps, validation plan and pending gates first. With a solo founder, this walkthrough is a self-review checklist as much as a meeting.
 
 ## Kickoff agenda
 
 | Minutes | Topic | Decision/output |
 |---|---|---|
-| 0–10 | Outcome and agreement boundary | Four counties, USD 10,000 minimum, conditional weekly target |
-| 10–25 | Acceptance fields and approvals | Recency/contact/cadence, private signoffs and unresolved gates |
-| 25–40 | Architecture and data lineage | Component owners and restricted evidence boundary |
-| 40–55 | Source access and first complete slice | All-four-source investigation and day-2 fallback |
-| 55–70 | Fifteen-day backlog | Assign P01–P12 and first-week demos |
-| 70–80 | Failure, spend and privacy | Stop conditions, escalation and recovery |
-| 80–90 | Commitments | Names, availability, next demo and decision deadlines |
+| 0–10 | Outcome and boundary | NJ/CT only, USD 10,000 minimum with exact cents, conditional target, agreement paused |
+| 10–25 | Source feasibility | CT and Bergen amount paths, observed restrictions, Essex optional |
+| 25–40 | Reuse of the existing engine | What to adapt, what not to inherit, ownership of in-progress work |
+| 40–55 | Validation stages | Exit evidence and stop rules for each stage |
+| 55–70 | Effort and economics | Internal envelope, weekly founder-hour budget, performance-only risk |
+| 70–80 | Failure, spend and privacy | Stop conditions, vendor and data-handling limits |
+| 80–90 | Commitments | Next checkpoint, owner questions and decision date |
 
-## Daily cadence
+## Cadence
 
-Fifteen-minute blocker review with actual evidence, next dependency and owner. Update public issues using sanitized summaries only; keep source/financial evidence and approvals restricted. Give material blockers immediate attention plus a weekly client update. Product decisions needed the same day cannot wait for a weekly ceremony.
+Short blocker review with actual evidence, next dependency and owner. Update public issues using sanitized summaries only; keep source, financial evidence and approvals restricted.
 
 ## Demonstration questions
 
-1. What client outcome works now, on real permitted evidence?
-2. What exact fields and source windows were verified?
-3. What happens when access, extraction, upload or review fails?
-4. What survives a restart, duplicate run and restore?
-5. Where is personal data stored and who can access it?
+1. What works now, on real permitted evidence?
+2. Which fields, amounts and source windows were independently verified?
+3. What happens when access, extraction, review or restart fails?
+4. Where is taxpayer data stored and who can access it?
+5. How many founder minutes did each eligible taxpayer cost?
 6. What remains blocked, who owns it and when is the decision needed?
-7. What acceptance criterion is satisfied rather than merely coded?
 
-## Milestone reviews
+## Recommendation review
 
-Day 2: usable permitted path or approved alternative/replan. Day 5: real complete-path CSV/import acceptance, otherwise cut expansion. Day 8: target approved first delivery if cadence/gates permit. Day 10: assess recovery and actual coverage/capacity. Day 12: freeze features. Day 15: operator demonstration, legitimate repeat delivery where calendar permits and explicit go/change/pause.
-
-Do not declare the agreement fulfilled by one automated county. Manual assistance needs acceptance; missing counties require a written change or pause. Do not turn historical supply into a recurring guarantee.
+Present one recommendation: GO TO AGREEMENT, NARROW SCOPE, NO-GO or NEEDS OWNER INPUT, with the evidence for each acceptance question (technical, volume, workload, economics) stated separately. Do not turn historical counts into a recurring guarantee, and do not treat one working state as full NJ/CT coverage.
 
 ## Launch decision
 

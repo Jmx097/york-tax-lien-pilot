@@ -8,14 +8,14 @@ Example paths: `/opt/york-tax-lien-pilot`, `/etc/york-tax-lien-pilot`, `/var/lib
 
 ## Daily operation
 
-1. Confirm applicable approvals, configuration version and county enablement.
+1. Confirm applicable approvals, configuration version and source enablement.
 2. Acquire application lock; enumerate incomplete/missed permitted windows.
 3. Collect with bounded requests, retries and spending limits; record actual source coverage.
 4. Extract/reconcile; route uncertain fields and status to restricted review.
 5. Record real counts, holds, gaps, lag, failures and costs; investigate unexpected zero.
 6. Review alerts and queue backlog with named operator/backup.
 
-Never treat HTTP success alone as usable results. Detect login/challenge/error pages, schema drift, caps and missing evidence. A county failure cannot disappear into an aggregate success flag.
+Never treat HTTP success alone as usable results. Detect login/challenge/error pages, schema drift, caps and missing evidence. A source failure cannot disappear into an aggregate success flag.
 
 ## Weekly transfer
 
@@ -40,7 +40,7 @@ Use an application-consistent SQLite backup mechanism rather than blindly copyin
 
 | Incident | Immediate action | Resume condition |
 |---|---|---|
-| Denied/paid source access | Stop affected county | Approved permitted resolution |
+| Denied/paid source access or challenge | Stop affected source; do not evade | Approved permitted resolution |
 | Parser drift/amount errors | Hold affected rows/batches | Evidence-backed correction and regression review |
 | Unexpected zero/cap | Mark incomplete, investigate | Complete-window evidence |
 | Budget/capacity limit | Stop affected work, notify | Explicit approved adjustment |

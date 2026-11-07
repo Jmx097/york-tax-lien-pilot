@@ -2,7 +2,7 @@
 
 ## Assignment
 
-Owner role: technical lead and firm coordinator. Target: days 6–8, and before every upload. Dependencies: stable state from P03 and reviewed identity from P05.
+Owner role: technical lead and firm operations contact. Stage: 2, offline MVP, and before every upload. Dependencies: stable state from P03 and reviewed identity from P05.
 
 ## Tasks
 
@@ -13,7 +13,7 @@ Owner role: technical lead and firm coordinator. Target: days 6–8, and before 
 
 ## Acceptance
 
-- [ ] The same taxpayer in another county or notice is not a new weekly lead.
+- [ ] The same taxpayer in another source, filing or notice is not a new weekly lead.
 - [ ] An opt-out received before transfer prevents inclusion even if the row was previously approved.
 - [ ] Delivery, client acceptance, and later activity remain separate statuses.
 

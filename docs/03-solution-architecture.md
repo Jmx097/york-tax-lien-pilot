@@ -2,7 +2,23 @@
 
 ## Decision
 
-Use one isolated batch application, persistent SQLite state and a restricted evidence directory on an approved existing host. Proposed implementation: supported patched Node LTS, TypeScript CLI, permitted direct requests, Playwright only when needed, PDF text extraction and limited local OCR. Host capacity, dependency versions and source access remain to be verified.
+Adapt the existing lien-automation engine into one isolated batch application with persistent SQLite state and a restricted evidence directory. Reuse its retry, rate-limit, checkpoint and queue foundations where they pass review. Proposed implementation: supported patched Node LTS, TypeScript CLI, permitted direct requests, Playwright only when needed, PDF text extraction and limited local OCR. Host capacity, dependency versions and source access remain to be verified.
+
+## Do not inherit from the earlier engine
+
+A read-only review of the earlier engine's main branch found behavior this pilot must not carry over:
+
+| Earlier behavior | Pilot requirement |
+|---|---|
+| Amount extraction truncates to whole dollars and takes the largest number on a keyword line | Exact cents from labelled evidence; unknown or ambiguous amount is HOLD |
+| OCR character substitution inside the amount itself | Never alter digits in the amount; route low-confidence reads to review |
+| Deduplication by source plus filing number | Unique eligible taxpayer across filings, with conservative matching |
+| Hardcoded fallback spreadsheet destination and default alert recipient | No default destination or recipient; transfer disabled unless explicitly configured and approved |
+| Spreadsheet writes that let cell text be interpreted as formulas | Formula-safe local CSV; dangerous leading characters held for review |
+| Cloud scheduler jobs and a daily automated review workflow | No schedulers, notifications or external model calls inherited |
+| Registered adapters for California, Maricopa and New York City only | New NJ/CT adapters built and verified from permitted evidence |
+
+Work in progress on a separate validation branch of the earlier engine is not yet on GitHub. Confirm its ownership and get a sanitized code handoff before building on it.
 
 No always-on public server, distributed queue, managed database, CRM, mailbox API, Drive API, custom payment app or runtime LLM is required. Operator-assisted review and manual secure folder upload are part of the pilot, not hidden automation claims.
 
@@ -10,7 +26,7 @@ No always-on public server, distributed queue, managed database, CRM, mailbox AP
 
 | Component | Responsibility | Durable output |
 |---|---|---|
-| Policy/source registry | Approved fields, gates, allowed hosts and mappings | Versioned policy and per-county evidence |
+| Policy/source registry | Approved fields, gates, allowed hosts and mappings | Versioned policy and per-source evidence |
 | Collector | Complete permitted windows, all pages, bounded retries | Recordings, coverage and queued jobs |
 | Extractor | Text first, narrow OCR, exact field evidence | Field candidates and hold reasons |
 | Review | Approve, correct, reject or hold | Reviewer, timestamp, reason and evidence |
@@ -23,7 +39,7 @@ No always-on public server, distributed queue, managed database, CRM, mailbox AP
 
 ## State and replay
 
-Recording uniqueness is county plus instrument number. Keep recording, notice, liability, taxpayer/prospect, review, status event, batch, delivery and receipt identities distinct. Never use taxpayer IDs as deduplication keys.
+Recording uniqueness is source plus instrument number. Keep recording, notice, liability, taxpayer/prospect, review, status event, batch, delivery and receipt identities distinct. Never use taxpayer IDs as deduplication keys.
 
 Persist discovered results and follow-up jobs before advancing a window checkpoint. A blocked, clipped or schema-invalid response cannot mark a window complete. A single-writer application lock and durable leased work prevent overlapping jobs; reclaim expired work after a crash. Bound transient retries; stop on permission/payment/schema changes and alert rather than looping.
 
@@ -49,4 +65,4 @@ Proposed paths: `/opt/york-tax-lien-pilot/` for releases, `/etc/york-tax-lien-pi
 
 ## Deferred work
 
-General OCR, extra automated counties after freeze, APIs, CRM, campaign infrastructure, paid enrichment, custom portal, conversion scoring and geographic expansion. Four-county scope remains a business requirement; deferred automation requires accepted manual coverage or an explicit scope change, not omission.
+General OCR, extra automated sources, APIs, CRM, campaign infrastructure, paid enrichment, custom portal, dashboard, conversion scoring and geography beyond NJ/CT. If only one state proves viable, the recommendation is NARROW SCOPE, not silent omission.

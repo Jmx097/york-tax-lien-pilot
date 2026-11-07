@@ -4,8 +4,8 @@
 
 | Entity | Identity and rule |
 |---|---|
-| Recording | Unique county plus instrument number; retain approved URL and document hash |
-| Notice | Verified non-taxpayer notice reference and evidence; can span county recordings |
+| Recording | Unique source plus instrument number; retain approved URL and document hash |
+| Notice | Verified non-taxpayer notice reference and evidence; can span source recordings |
 | Liability | Tax-period/form/assessment evidence within a notice; no blind summing |
 | Prospect | Conservative name/address linkage with reviewer-confirmed aliases |
 | Status event | Explicit notice reference and scope; material ambiguity held |
@@ -14,19 +14,19 @@
 | Delivery | Approved batch, destination, remote evidence and independent acknowledgement |
 | Receipt | Unique actual payment ID, referral linkage and append-only adjustments |
 
-Do not deduplicate on last name, ZIP or county alone. Same-name/different-address and joint-party cases require conservative review. Previously delivered taxpayers do not become new leads because of another county or notice. Approved updates are separate from new weekly lead counts.
+The counted unit is a unique eligible taxpayer, not a filing document or party-index row. Do not deduplicate on last name, ZIP or county alone. Same-name/different-address and joint-party cases require conservative review. Previously delivered taxpayers do not become new leads because of another source or notice. Approved updates are separate from new weekly counts. Recording county is not automatically taxpayer residence; apply the agreed NJ/CT geographic rule to the taxpayer's address.
 
 ## Amount and status
 
-Store money as integer cents. Export fixed two-decimal USD text. The qualifying primary notice must have a documented amount of at least USD 10,000 (1,000,000 cents). Do not aggregate overlapping notices to reach the minimum; preserve supporting notices separately. Reconcile printed total with unique liability rows; redacted, uncertain or conflicting amounts stay held.
+Store money as integer cents and preserve the exact source amount, including cents. An unknown amount means HOLD, never zero or an estimate. Export fixed two-decimal USD text. The qualifying primary notice must have a documented amount of at least USD 10,000 (1,000,000 cents). Do not aggregate overlapping notices to reach the minimum; preserve supporting notices separately. Reconcile printed total with unique liability rows; redacted, uncertain or conflicting amounts stay held.
 
 Use `amount_basis=primary_notice_not_current_balance` and `current_balance_verified=false`. Recording fees, OCR duplicates and unrelated dollar figures are not debt evidence.
 
-The [IRS lien guidance](https://www.irs.gov/businesses/small-businesses-self-employed/understanding-a-federal-tax-lien) distinguishes release, withdrawal, property discharge and subordination. Linked full releases suppress the affected opportunity, not all unrelated liabilities. Withdrawal excludes the notice campaign without asserting debt paid. Partial releases, refiles, amendments, discharges, subordinations and uncertain links require scoped reconciliation or review. Report what was checked and when, not guaranteed current legal enforceability.
+The [IRS lien guidance](https://www.irs.gov/businesses/small-businesses-self-employed/understanding-a-federal-tax-lien) distinguishes release, withdrawal, property discharge and subordination. Linked full releases suppress the affected opportunity, not all unrelated liabilities. Withdrawal excludes the notice campaign without asserting debt paid. Partial releases, refiles, amendments, discharges, subordinations and uncertain links require scoped reconciliation or review. Report what was checked and when, with explicit coverage limits, not guaranteed current legal enforceability. A source label of Active is not proof of currently enforceable unpaid debt; unknown or conflicting status means HOLD.
 
 ## Inclusion rules
 
-Require approved county/type, instrument identity, traceable evidence, taxpayer name, exact approved contact fields, amount at or above the minimum, signed recency policy, reviewer approval, status checks, no prior delivery and no suppression. Additional entity/amount preferences are unset and cannot silently narrow the agreement.
+Require an approved NJ/CT source and initial IRS lien type, instrument identity, traceable evidence, taxpayer name, exact approved contact fields, amount at or above the minimum, signed recency policy, reviewer approval, status checks, no prior delivery and no suppression. Additional entity/amount preferences are unset and cannot silently narrow the agreement.
 
 Fifty is a conditional weekly target, not a mandatory selection cap or rolling-average definition. Agree whether to export all eligible rows or a capped selection; disclose actual counts and reasons. Recency, required contact fields, cutoff and acceptance deadline stay unset until agreed. Phone/email cannot be assumed or invented; paid enrichment is excluded.
 
@@ -40,7 +40,7 @@ Treat strings as untrusted. [OWASP CSV injection guidance](https://community.owa
 
 ## Manifest and delivery
 
-Restricted manifest: batch/cutoff IDs, schema/policy/code versions, covered intervals, county counts, held/excluded counts, gaps, certified-through observations, checksum, byte size, approver and separate upload state. Public reports contain aggregates only.
+Restricted manifest: batch/cutoff IDs, schema/policy/code versions, covered intervals, per-source counts, held/excluded counts, gaps, certified-through observations, checksum, byte size, approver and separate upload state. Public reports contain aggregates only.
 
 Zero qualified rows require explicit shortfall handling and approval, not a successful fifty-lead label. Correction creates a new revision; records remain auditable. No email attachment or public-link fallback without separately approved policy.
 

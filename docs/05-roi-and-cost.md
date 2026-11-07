@@ -2,7 +2,7 @@
 
 ## Financial decision
 
-Treat development as at-risk internal effort until the private commercial agreement is finalized and cleared. No guaranteed setup recovery, minimum payment, conversion or collected revenue is assumed. Approve an internal build-hour ceiling, reviewer capacity, ongoing support boundary and stop-loss review before starting.
+Treat development as at-risk internal effort: the proposed economics are performance-only, with no upfront payment, and the agreement is paused pending validation. No guaranteed setup recovery, minimum payment, conversion or collected revenue is assumed. Hold a private internal build/validation hour envelope, a short source-feasibility checkpoint inside it, and a small weekly founder-hour budget for ongoing fulfilment. Capital discipline means narrowing or stopping rather than accepting unlimited unpaid engineering.
 
 The earlier proposed USD 10/month incremental ceiling is not verified. Existing host/mailbox capacity, backup storage, source/document fees, optional vendors and human review are not free simply because no new platform is built. Optional integration wording in the draft does not estimate the whole project and needs a separate scope decision.
 
@@ -11,8 +11,8 @@ The earlier proposed USD 10/month incremental ceiling is not verified. Existing 
 | Category | Baseline | Approval needed |
 |---|---|---|
 | Host | Existing host considered, capacity unverified | Owner and isolation approval |
-| Source/document | No purchases enabled | County-specific lawful access, amount and budget |
-| Vendor/browser service | Disabled | Necessity, terms, cost cap and product approval |
+| Source/document | No purchases enabled | Source-specific lawful access, amount and budget |
+| Vendor/browser service | Disabled; preflight did not authenticate, effectiveness untested | Necessity, terms, cost cap and product approval |
 | Shared storage/backup | Existing approved workspace considered | Permissions, capacity, retention and off-host backup |
 | Review/support | Measure real time | Named capacity, weekly limit and escalation |
 | APIs/enrichment/campaigns | Excluded | New written scope and approval |
@@ -33,10 +33,10 @@ Compensation structure requires qualified professional-regulatory review before 
 
 ## Metrics
 
-Report actual covered county windows, raw recordings, unique taxpayers, eligible/held/excluded/delivered/accepted rows, review minutes, source costs, failures and shortfall reasons. Keep historical backfill separate from recurring supply.
+Report actual covered source windows, raw recordings, unique taxpayers, eligible/held/excluded/delivered/accepted rows, review minutes, source costs, failures and shortfall reasons. Keep historical backfill separate from recurring supply.
 
 Outcomes follow actual firm reports: contacts, consultations, collected engagements, refunds and contribution after actual costs. No invented conversion probability, county-income multiplier, current-payoff assertion or cost-per-engaged-client result without real denominators. Start with hard eligibility and deterministic ordering rather than elaborate scoring.
 
 ## Stop conditions
 
-Escalate unresolved access, missing contact requirements, unsustainable review effort, exhausted capacity/budget, unclear compensation legality, unresolved tax treatment or attribution disputes. Obtain explicit approved changes or pause affected work. The three-week target does not supersede these controls.
+Escalate unresolved access, missing contact requirements, unsustainable review effort, exhausted capacity/budget, unclear compensation legality, unresolved tax treatment or attribution disputes. Obtain explicit approved changes or pause affected work. No provisional workback date supersedes these controls.
