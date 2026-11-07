@@ -1,13 +1,13 @@
-# [P01] Confirm client acceptance and launch decisions
+# [P01] Confirm owner and client decisions
 
 ## Assignment
 
-Owner role: product owner and firm approver. Target: days 1–2 for initial decisions; applicable gates before activation. Dependencies: none. No execution or approvals are assumed.
+Owner role: product owner and firm approver. Stage: 5, after the validation evidence; applicable gates before activation. Owner-only questions can be raised at any stage as NEEDS OWNER INPUT. No execution or approvals are assumed.
 
 ## Tasks
 
-- [ ] Reconcile the private signed agreement, execution date, and working calendar outside GitHub.
-- [ ] Approve recency, exact contact fields, the USD 10,000 minimum, entity and joint-party rules, the conditional target and shortfall policy, and delivery cadence.
+- [ ] Reconcile the governing agreement version, latest correspondence, signatories and working calendar outside GitHub. Agreement finalization stays paused until the validation recommendation.
+- [ ] Approve recency, required fields, the NJ/CT geographic rule, the USD 10,000 minimum, entity and joint-party rules, the conditional target or a lower one, shortfall policy and delivery cadence.
 - [ ] Assign qualified compensation and tax review, and complete attribution, collections, duration, and termination windows.
 - [ ] Approve named staff, internal effort and review limits, lawful use, and spending caps.
 - [ ] Record G01–G12 owners, dates, and evidence in the restricted workspace. Public updates contain sanitized status only.

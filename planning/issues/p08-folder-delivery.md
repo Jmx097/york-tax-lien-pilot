@@ -2,7 +2,7 @@
 
 ## Assignment
 
-Owner role: technical lead and operator. Target: a day-5 sample and a first approved batch around day 8, then repeat on the agreed cadence. Dependencies: P04, P05, P07, and the applicable launch gates, including professional and data-transfer approval.
+Owner role: technical lead and operator. Stage: only after a GO TO AGREEMENT or NARROW SCOPE decision. Dependencies: P04, P05, P07, P12's recommendation, and the applicable launch gates, including professional and data-transfer approval.
 
 ## Tasks
 

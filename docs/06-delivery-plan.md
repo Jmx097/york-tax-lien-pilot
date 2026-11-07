@@ -1,47 +1,42 @@
-# Three-week delivery plan
+# Validation and delivery plan
 
 ## Commitment and assumptions
 
-Deliver a gated operator-assisted pilot, not eight weeks of automation compressed into three. The private draft targets approximately two weeks with a three-week planning allowance after execution; this plan uses 15 working days for sequencing, not a guaranteed date or an assumption that weekends/holidays are staffed. Confirm start and working calendar.
+Validate before committing. The output of this plan is one evidence-backed recommendation: GO TO AGREEMENT, NARROW SCOPE, NO-GO or NEEDS OWNER INPUT. It is not a delivery promise. Any two-to-three-week workback is provisional and starts only if validation supports it.
 
-Assume two focused technical contributors, daily reviewer/operator availability and same-day product decisions. Assign names at kickoff. With one builder or delayed approvals, explicitly reduce scope or replan. Preserve all-four-county coverage unless a written change is approved; one working adapter is only a milestone.
+Assume one founder who also handles fulfilment, working inside a private, bounded internal build/validation envelope with a short source-feasibility checkpoint first. Ongoing fulfilment must fit a small, measured weekly founder-hour budget. These are internal decision limits, not client service levels or measured results. One writer per checkout; another workstream editing the same files must finish or hand off first.
 
-## Fifteen-day plan
+## Validation stages
 
-| Day | Parallel technical work | Product/review evidence |
-|---|---|---|
-| 1 | Host inventory, policy/state skeleton; investigate all four sources | Confirm execution/start, owners, fields, access and capacity boundaries |
-| 2 | Source permission/fee/evidence decisions; durable runner | Approve real-source path or invoke accepted manual alternative/replan |
-| 3 | First permitted adapter; migrations and extraction evidence | Review representative records and critical field availability |
-| 4 | End-to-end collection, review queue and CSV draft | Resolve identity/status holds; test actual importer |
-| 5 | Demonstrate real reviewed county-to-CSV slice | Client sample acceptance; if incomplete cut expansion, not safety |
-| 6 | Suppressions, prior-delivery ledger; approved other-county paths | Clarify overlaps, manual effort and restricted log ownership |
-| 7 | Qualification, manifests, upload states and source coverage | Review all required gates and first-batch readiness |
-| 8 | Target first approved live batch if gates/cadence permit | Verify remote artifact, client acknowledgement and shortfall reasons |
-| 9 | Fix observed defects; continue approved coverage | Firm acceptance/activity/receipt reconciliation |
-| 10 | Scheduling, alerts, consistent backup and isolated restore | Assess capacity/coverage; no speculative county expansion |
-| 11 | Security, duplicate/replay, suppression and upload-uncertainty tests | Review defect evidence, importer behavior and unresolved gates |
-| 12 | Feature freeze; lock release candidate | No new adapters/APIs; approve corrections and operator handoff scope |
-| 13 | Operator runs from runbook; prepare next legitimate batch | Confirm access roster, handoff and residual risk owners |
-| 14 | Recovery rehearsal and fixes only | Client acceptance and next-cadence readiness |
-| 15 | Repeat delivery if agreed cutoff permits; operational handoff | Go, signed reduced scope or pause; record actual results |
+The stages run in order on a single worker chain. Each stage ends with sanitized evidence and a stop/continue decision.
 
-Day 8 and day 15 are targets, not permission to override weekly cadence, cutoff or approval. If a second legitimate delivery falls after this window, agree the observation/handoff schedule explicitly; never fabricate a second live cycle.
+| Stage | Work | Exit evidence | Stop or narrow if |
+|---|---|---|---|
+| 1. Source feasibility | Prove a permitted document path with exact amounts for CT statewide and Bergen | Dated source decisions and a handful of permitted records with labelled amounts and cents | Neither state yields exact amounts through a permitted method |
+| 2. Offline MVP | Adapt the existing engine: intake, type/amount/identity/geography checks, taxpayer dedupe, release checks, HOLD states, review, local CSV and manifest | Tests on permitted evidence, with synthetic fixtures labelled synthetic; formula-safe CSV | Core checks cannot be made reliable within the envelope |
+| 3. Permitted integration | Durable checkpoints, idempotent reruns, partial-source failure and safe restart against the green source(s) | Real source-to-local-review slice; restart and replay evidence | Access changes, challenges or unclear terms |
+| 4. Independent QA and workload | Independent field-by-field comparison against source documents; measure founder review minutes per eligible taxpayer | Comparison results, correction rate, measured weekly effort and eligible weekly yield | Errors persist or effort exceeds the weekly budget |
+| 5. Decision | Combine technical, volume, workload and economics evidence | Recommendation with supporting evidence and open owner questions | — |
+
+Synthetic fixtures cannot establish live-source success. Parser runtime is not founder review time.
+
+## If the decision is to proceed
+
+Only after a GO TO AGREEMENT or agreed NARROW SCOPE, and after the applicable gates pass:
+
+1. Confirm agreement version, signatories, start and working calendar privately.
+2. Approve required fields, recency, geographic rule, recipients, folder and importer test.
+3. Produce a reviewed sample, test it in the firm's actual importer and record acceptance.
+4. Deliver the first approved batch through the restricted folder with suppression rechecked immediately before upload.
+5. Repeat on the agreed cadence; hand off to a named operator and backup with restore proof.
 
 ## Deadline protections
 
-- Day 2: no usable permitted evidence means approved manual alternative or immediate replan.
-- Day 5: no complete path means cut additional automation and escalate; do not weaken field/status rules.
-- Day 10: additional automation only when the first path, delivery controls and recovery work.
-- Day 12: freeze features; defects, repeated operation and handoff only.
-- Daily: 15-minute blocker review and sanitized board updates; escalate material blockers immediately and provide weekly client updates.
-
-## Workstreams
-
-Technical lead owns policy/state, review, identity, suppression, export and recovery. Source engineer owns access investigation and county paths. Reviewer owns evidence and row approval; operations owns isolation/backup; product resolves dependencies; firm approves fields/acceptance and maintains its log. Do not infer absent staff or available hours.
-
-Critical path: approved fields/access → usable evidence → complete reviewed slice → suppression and identity → immutable export → approved verified upload → repeatability → operator acceptance. Professional/tax and personal-data approvals remain independent blocking gates.
+- Source feasibility first: no time on UI, dashboards or volume promises before the amount gate clears.
+- Do not weaken field, status or identity rules to hit a date or a target.
+- Stop on denied access, challenges or unclear terms; never evade controls.
+- Escalate material blockers to the product owner immediately; keep shared status sanitized.
 
 ## Done means
 
-Working approved coverage or signed amendment; no unsupported rows; client-tested fixed CSV; stable IDs and suppression; verified authorized delivery; restart/restore proof; named operator and backup; capacity and costs measured; unresolved risks disclosed. Sources, transfers, spending and billing cannot be activated merely because documentation is merged.
+An explicit recommendation with real evidence; no unsupported rows; exact amounts with cents; taxpayer-level dedupe; external transfer disabled by default; restart and replay proof; measured effort and costs; unresolved risks disclosed. Sources, transfers, spending and billing cannot be activated merely because documentation is merged.

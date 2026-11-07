@@ -22,10 +22,21 @@ if policy['minimum_notice_amount_cents'] != 1_000_000:
     failures.append('Minimum must be USD 10,000 in integer cents')
 if policy['weekly_target_unique_taxpayers'] != 50 or policy['weekly_target_is_guarantee'] is not False:
     failures.append('Conditional target mismatch')
-if set(policy['counties']) != {'dallas', 'collin', 'denton', 'bexar'}:
-    failures.append('Four-county registry mismatch')
-if any(c['enabled'] or c['access_decision'] != 'pending' for c in policy['counties'].values()):
-    failures.append('Example county must remain disabled/pending')
+if policy['territory_states'] != ['CT', 'NJ']:
+    failures.append('Territory must be CT and NJ only')
+if policy['validation_decision'] not in (None, 'GO_TO_AGREEMENT', 'NARROW_SCOPE', 'NO_GO', 'NEEDS_OWNER_INPUT'):
+    failures.append('Unknown validation decision')
+if policy['preserve_amount_cents'] is not True or policy['unknown_amount_action'] != 'hold':
+    failures.append('Amounts must keep cents and unknown amounts must hold')
+sources = policy['sources']
+if set(sources) != {'ct_statewide', 'nj_bergen', 'nj_essex'}:
+    failures.append('NJ/CT source registry mismatch')
+if any(s['state'] not in policy['territory_states'] for s in sources.values()):
+    failures.append('Source outside territory')
+if sources['nj_essex']['role'] != 'optional_inactive':
+    failures.append('Essex must stay optional and inactive')
+if any(s['enabled'] or s['access_decision'] != 'pending' for s in sources.values()):
+    failures.append('Example source must remain disabled/pending')
 for field in ('recency_days', 'required_contact_fields', 'delivery_weekday', 'delivery_timezone'):
     if policy[field] is not None:
         failures.append(f'Unapproved client default: {field}')
@@ -37,5 +48,5 @@ for path in (root / 'contracts').glob('*.columns.txt'):
         failures.append(f'Invalid headers: {path.name}')
 if failures:
     raise SystemExit('\n'.join(failures))
-print('PASS: internal links, disabled policy, four counties, amount/target, twelve issue drafts and headers.')
+print('PASS: internal links, disabled policy, NJ/CT source registry, amount/target, twelve issue drafts and headers.')
 print('Not tested: runtime, live sources, security configuration, professional/tax clearance or deployment.')

@@ -1,8 +1,8 @@
-# [P10] Schedule operations and demonstrate recovery
+# [P10] Prove restart, replay and recovery
 
 ## Assignment
 
-Owner role: operations and technical lead. Target: days 8–10. Dependencies: the P03 runner, P08 delivery state, and approved host, source, and schedule policy.
+Owner role: technical lead and operations. Stage: 3, permitted integration, for restart and replay; scheduling only after a GO or NARROW SCOPE decision. Dependencies: the P03 runner, a green source from P02, and approved host and source policy.
 
 ## Tasks
 

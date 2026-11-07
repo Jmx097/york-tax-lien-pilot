@@ -4,7 +4,7 @@ Link work package and describe acceptance evidence without confidential records.
 
 ## Checks
 
-- [ ] Required approvals remain current; no silent county/field/commercial change.
+- [ ] Required approvals remain current; no silent source/state/field/commercial change.
 - [ ] No taxpayer records, private agreement, financial logs, credentials or private advice.
 - [ ] Collection, transfer, spending and billing stay disabled absent explicit applicable approval.
 - [ ] Relevant failure/replay, identity, suppression and upload tests included.

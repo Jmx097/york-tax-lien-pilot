@@ -1,5 +1,7 @@
 {
-  "schema_version": "pilot-policy-draft-v1",
+  "schema_version": "pilot-policy-draft-v2",
+  "territory_states": ["CT", "NJ"],
+  "validation_decision": null,
   "collection_enabled": false,
   "personal_data_transfer_enabled": false,
   "paid_access_enabled": false,
@@ -8,6 +10,8 @@
   "currency": "USD",
   "weekly_target_unique_taxpayers": 50,
   "weekly_target_is_guarantee": false,
+  "preserve_amount_cents": true,
+  "unknown_amount_action": "hold",
   "recency_days": null,
   "required_contact_fields": null,
   "entity_rules": null,
@@ -20,10 +24,9 @@
   "source_byte_limit": null,
   "monthly_spend_cap_cents": null,
   "approved_policy_reference": null,
-  "counties": {
-    "dallas": {"enabled": false, "access_decision": "pending"},
-    "collin": {"enabled": false, "access_decision": "pending"},
-    "denton": {"enabled": false, "access_decision": "pending"},
-    "bexar": {"enabled": false, "access_decision": "pending"}
+  "sources": {
+    "ct_statewide": {"state": "CT", "role": "primary", "enabled": false, "access_decision": "pending"},
+    "nj_bergen": {"state": "NJ", "role": "primary", "enabled": false, "access_decision": "pending"},
+    "nj_essex": {"state": "NJ", "role": "optional_inactive", "enabled": false, "access_decision": "pending"}
   }
 }

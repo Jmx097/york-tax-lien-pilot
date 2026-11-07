@@ -2,7 +2,7 @@
 
 ## Assignment
 
-Owner role: product owner and firm coordinator. Target: days 6–11. Dependencies: approved attribution, commercial, and tax decisions from P01 before any live billing, plus stable identities from P07.
+Owner role: product owner and firm operations contact. Stage: only after a GO TO AGREEMENT or NARROW SCOPE decision. Dependencies: approved attribution, commercial, and tax decisions from P01 before any live billing, plus stable identities from P07.
 
 ## Tasks
 
